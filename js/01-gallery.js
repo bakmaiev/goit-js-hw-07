@@ -34,10 +34,25 @@ galleryEl.addEventListener('click', handleImgClick);
 function createImageModal(image) {
     const instance = basicLightbox.create(`
     <img src="${image}" width="1200">
-`, {
-        onShow: (instance) => {
-        instance.element()
+`,
+    {
+    onShow: () => {
+        window.addEventListener('keydown', handleClickEscape)
+    },
+    onClose: () => {
+        window.removeEventListener('keydown', handleClickEscape)
+    },
+
+    });
+    
+    instance.show();
+
+    function handleClickEscape(e) {
+        if (e.code !== 'Escape') return;
+        instance.close();
     }
-})
-instance.show()
 }
+
+
+
+
